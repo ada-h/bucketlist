@@ -1,0 +1,5 @@
+{
+    "user" : "Adah",
+    "password": "sheldon",
+    "commonRoute" : "/api/v1"
+}

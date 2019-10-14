@@ -1,0 +1,277 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Bucket List API",
+      "description": "GetDev Project",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Auth",
+        "description": "API for Registration and Login"
+      },
+      {
+        "name": "Buckets",
+        "description": "API for Performing Action on Buckets"
+      },
+      {
+        "name": "Items",
+        "description": "API for Performing Action on lists"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "description": "Log in and authenticate old users and Registerand authenticate  New Users",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Auth"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Login Successful",
+              "schema": {
+                "$ref": "#/definitions/Auth"
+              }
+            }
+          }
+        }
+  
+        },
+      "/bucketlists":{
+          "post":{
+              "tags": ["Buckets"],
+              "description": "Create a bucket list",
+              "parameters": [
+                {
+                  "name": "bucket",
+                  "in": "body",
+                  "description": "Bucket that we want to create",
+                  "schema": {
+                    "$ref": "#/definitions/Bucket"
+                  }
+                }
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Bucketlist created!",
+                  "schema": {
+                    "$ref": "#/definitions/Bucket"
+                  }
+                }
+              }
+          },
+          "get":{
+            "tags": ["Buckets"],
+            "summary": "Get all Users Bucket List",
+            "responses": {
+              "200": {
+                "schema": {
+                  "$ref": "#/definitions/Bucket"
+                }
+              }
+            }
+        }
+      },
+
+      "/bucketlists/{id}":{
+        "get":{
+            "tags": ["Buckets"],
+            "summary": "Get a Particular Bucket",
+            "responses": {
+              "200": {
+                "schema": {
+                  "$ref": "#/definitions/Bucket"
+                }
+              }
+            }},
+            "put":{
+                "tags": ["Buckets"],
+                "summary": "Update a Particular Bucket",
+                "responses": {
+                  "200": {
+                    "summary": "This bucketlist has been edited successfully!",
+                    "schema": {
+                      "$ref": "#/definitions/Bucket"
+                    }
+                  }
+                }},
+                "delete":{
+                    "tags": ["Buckets"],
+                    "summary": "Delete a Particular Bucket",
+                    "responses": {
+                      "200": {
+                        "summary": "Bucketlist has been deleted successfully!",
+                        "schema": {
+                          "$ref": "#/definitions/Bucket"
+                        }
+                      }
+                    }}
+                    
+      },
+      "/bucketlists/{id}/items":{
+        "post":{
+            "tags": ["Items"],
+            "description": "Create new item in bucket",
+            "parameters": [
+              {
+                "name": "item",
+                "in": "body",
+                "description": "Item that we want to create",
+                "schema": {
+                  "$ref": "#/definitions/Item"
+                }
+              }
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Item created!",
+                "schema": {
+                  "$ref": "#/definitions/Item"
+                }
+              }
+            }
+        },
+        "get":{
+          "tags": ["Items"],
+          "summary": "Get all items in a Bucket List",
+          "responses": {
+            "200": {
+              "schema": {
+                "$ref": "#/definitions/Item"
+              }
+            }
+          }
+      }
+    
+        },
+        "/bucketlists/{bucketId}/items/{listId}":{
+            "get":{
+                "tags": ["Items"],
+                "summary": "Get a Particular Item from List",
+                "responses": {
+                  "200": {
+                    "schema": {
+                      "$ref": "#/definitions/Item"
+                    }
+                  }
+                }},
+                "put":{
+                    "tags": ["Items"],
+                    "summary": "Update a Particular Item from List",
+                    "responses": {
+                      "200": {
+                        "summary": "Item has been updated successfully",
+                        "schema": {
+                          "$ref": "#/definitions/Item"
+                        }
+                      }
+                    }},
+                    "delete":{
+                        "tags": ["Buckets"],
+                        "summary": "Delete a Particular Bucket",
+                        "responses": {
+                          "200": {
+                            "summary": "This item has been deleted successfully",
+                            "schema": {
+                              "$ref": "#/definitions/Item"
+                            }
+                          }
+                        }}
+                        
+          }
+
+
+    },
+    "definitions": {
+      "Auth": {
+        "required": [
+          "name",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "uniqueItems": true
+          }
+         
+        }
+       
+      },
+     "Bucket":{
+         "properties":{
+            "name": {
+                "type": "string",
+                "uniqueItems": true
+              },
+            "date_created": {
+                "type": "string"
+              },
+            "date_modified": {
+                "type": "string"
+              },
+            "created_by": {
+                "type": "string"
+              }
+         }
+     },
+     "Item":{
+        "properties":{
+            "bucketlistId": {
+                "type": "string"
+              },
+            "name": {
+                "type": "string"
+              },
+            "date_created": {
+                "type": "string"
+              },
+            "date_modified": {
+                "type": "string"
+              },
+            "done": {
+                "type": "boolean"
+              }
+        }
+    }
+     
+    }
+  }
